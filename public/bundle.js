@@ -49,6 +49,8 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(38);
 	var Main = __webpack_require__(168);
+	// var Search = require('./components/SearchNYT.js');
+
 	// Grab the property associated with the Router
 	// var Router = require('react-router').Router;
 
@@ -20395,89 +20397,132 @@
 /* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(1);
-	var Searches = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Searches\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var Results = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Search/Results\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var Query = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Search/Query\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var Saved = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Search/Saved\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var Search = __webpack_require__(169);
 
 	var Main = React.createClass({
-	  displayName: 'Main',
+	  displayName: "Main",
 
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      name: "I am the main component"
+	    };
+	  },
 	  render: function render() {
 	    return React.createElement(
-	      'div',
-	      { className: 'container' },
+	      "div",
+	      { className: "container" },
 	      React.createElement(
-	        'nav',
-	        { className: 'navbar navbar-default' },
+	        "nav",
+	        { className: "navbar navbar-default" },
 	        React.createElement(
-	          'div',
-	          { className: 'container-fluid' },
+	          "div",
+	          { className: "container-fluid" },
 	          React.createElement(
-	            'div',
-	            { className: 'navbar-header' },
+	            "div",
+	            { className: "navbar-header" },
 	            React.createElement(
-	              'a',
-	              { className: 'navbar-brand', href: '#' },
-	              'NYT React'
+	              "a",
+	              { className: "navbar-brand", href: "#" },
+	              "NYT React"
 	            )
 	          ),
 	          React.createElement(
-	            'ul',
-	            { className: 'nav navbar-nav' },
+	            "ul",
+	            { className: "nav navbar-nav" },
 	            React.createElement(
-	              'li',
-	              { className: 'active' },
+	              "li",
+	              { className: "active" },
 	              React.createElement(
-	                'a',
-	                { href: '#' },
-	                'Home'
+	                "a",
+	                { href: "#" },
+	                "Home"
 	              )
 	            ),
 	            React.createElement(
-	              'li',
+	              "li",
 	              null,
 	              React.createElement(
-	                'a',
-	                { href: '#' },
-	                'Search'
+	                "a",
+	                { href: "#" },
+	                "Search"
 	              )
 	            ),
 	            React.createElement(
-	              'li',
+	              "li",
 	              null,
 	              React.createElement(
-	                'a',
-	                { href: '#' },
-	                'Saved Articles'
+	                "a",
+	                { href: "#" },
+	                "Saved Articles"
 	              )
 	            )
 	          )
 	        )
 	      ),
 	      React.createElement(
-	        'div',
-	        { className: 'jumbotron' },
+	        "div",
+	        { className: "jumbotron" },
 	        React.createElement(
-	          'h1',
+	          "h1",
 	          null,
-	          '(REACTJS) New York Times Article Search'
+	          "(REACTJS) New York Times Article Search"
 	        ),
 	        React.createElement(
-	          'p',
+	          "p",
 	          null,
-	          'Search for and save articles of interest.'
+	          "Search for and save articles of interest."
 	        )
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "mainBox" },
+	        React.createElement(
+	          "h1",
+	          null,
+	          "Components"
+	        ),
+	        React.createElement(Search, { mainsName: this.state.name })
 	      )
 	    );
 	  }
 	});
 
 	module.exports = Main;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var Search = React.createClass({
+	  displayName: "Search",
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      name: "I am the Search component"
+	    };
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "container" },
+	      React.createElement(
+	        "h1",
+	        { className: "searchBox" },
+	        this.props.name
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Search;
 
 /***/ }
 /******/ ]);

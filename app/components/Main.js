@@ -1,11 +1,13 @@
 var React = require('react');
-var Searches = require('./components/Searches');
-
-var Results = require('./components/Search/Results');
-var Query = require('./components/Search/Query');
-var Saved = require('./components/Search/Saved');
+var Search = require("./Search")
 
 var Main = React.createClass({
+
+  getInitialState: function() {
+    return {
+      name: "I am the main component"
+    }
+  },
   render: function() {
     return (
         <div className="container">
@@ -24,10 +26,14 @@ var Main = React.createClass({
           <div className="jumbotron">
             <h1>(REACTJS) New York Times Article Search</h1> 
             <p>Search for and save articles of interest.</p> 
+          </div> 
+          <div className="mainBox">
+            <h1>Components</h1>
+            <Search mainsName={this.state.name} />
           </div>
         </div>
     )
   }
-});
+})
 
 module.exports = Main;

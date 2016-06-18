@@ -8,7 +8,6 @@ module.exports = {
     filename: "public/bundle.js"
   },
 
-
   // This will be what we do
   module: {
     loaders: [

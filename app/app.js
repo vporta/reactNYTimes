@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Main = require('./components/Main');
+var Main = require('./Components/Main')
+// var Search = require('./components/SearchNYT.js');
+
 // Grab the property associated with the Router
 // var Router = require('react-router').Router;
 
@@ -14,7 +16,7 @@ ReactDOM.render(
   // <Router>{routes}</Router>,
   <Main />, 
   document.getElementById('app')
-);
+)
 
 
 
