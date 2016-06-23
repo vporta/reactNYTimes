@@ -1,4 +1,5 @@
 var React = require('react');
+var Router = require('react-router');
 var Search = require("./Search")
 
 var Main = React.createClass({
