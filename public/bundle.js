@@ -49,12 +49,7 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(38);
 	var Router = __webpack_require__(168).Router;
-	var router = __webpack_require__(229);
-	var Main = __webpack_require__(230);
-	// var Search = require('./components/SearchNYT.js');
-
-	// Grab the property associated with the Router
-	// var Router = require('react-router').Router;
+	// var Main = require('./Components/Main');
 
 	// Grabs the "routes"
 	var routes = __webpack_require__(229);
@@ -67,7 +62,9 @@
 	  Router,
 	  null,
 	  routes
-	), React.createElement(Main, null), document.getElementById('app'));
+	),
+	// <Main />,
+	document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -26187,18 +26184,33 @@
 
 /***/ },
 /* 229 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// var express = require('express');
-	// var router = express.Router();
+	'use strict';
 
-	// /* GET home page. */
-	// router.get('/', function(req, res, next) {
-	//   res.render('index', { title: 'Express' });
-	// });
+	// Inclue the React library
+	var React = __webpack_require__(1);
 
-	// module.exports = router;
-	"use strict";
+	// Include the Router
+	var Router = __webpack_require__(168);
+	var Route = Router.Route;
+
+	//  Include the IndexRoute (catch-all route)
+	var IndexRoute = Router.IndexRoute;
+
+	// Reference the high-level components
+	var Main = __webpack_require__(230);
+	var Saved = __webpack_require__(231);
+	var Search = __webpack_require__(232);
+
+	// Export the Routes
+	module.exports = React.createElement(
+	  Route,
+	  { path: '/', component: Main },
+	  React.createElement(Route, { path: 'Search', component: Search }),
+	  React.createElement(Route, { path: 'Saved', component: Saved }),
+	  React.createElement(IndexRoute, { component: Search })
+	);
 
 /***/ },
 /* 230 */
@@ -26208,7 +26220,7 @@
 
 	var React = __webpack_require__(1);
 	var Router = __webpack_require__(168);
-	var Search = __webpack_require__(231);
+	// var Search = require("./Search")
 
 	var Main = React.createClass({
 	  displayName: 'Main',
@@ -26255,7 +26267,7 @@
 	              null,
 	              React.createElement(
 	                'a',
-	                { href: '#' },
+	                { href: '#/search' },
 	                'Search'
 	              )
 	            ),
@@ -26264,7 +26276,7 @@
 	              null,
 	              React.createElement(
 	                'a',
-	                { href: '#' },
+	                { href: '#/saved' },
 	                'Saved Articles'
 	              )
 	            )
@@ -26285,15 +26297,17 @@
 	          'Search for and save articles of interest.'
 	        )
 	      ),
+	      this.props.children,
 	      React.createElement(
-	        'div',
-	        { className: 'mainBox' },
+	        'footer',
+	        null,
+	        React.createElement('hr', null),
 	        React.createElement(
-	          'h1',
-	          null,
-	          'Components'
-	        ),
-	        React.createElement(Search, { mainsName: this.state.name })
+	          'p',
+	          { className: 'pull-right' },
+	          React.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' }),
+	          ' Proudly built using React.js'
+	        )
 	      )
 	    );
 	  }
@@ -26309,12 +26323,12 @@
 
 	var React = __webpack_require__(1);
 
-	var Search = React.createClass({
-	  displayName: "Search",
+	var Saved = React.createClass({
+	  displayName: "Saved",
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      name: "I am the Search component"
+	      name: "I am the Saved component"
 	    };
 	  },
 	  render: function render() {
@@ -26330,7 +26344,144 @@
 	  }
 	});
 
-	module.exports = Search;
+	module.exports = Saved;
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	// Include React and React-Router dependencies
+	var React = __webpack_require__(1);
+
+	// Query Component Declaration
+	var Query = React.createClass({
+	  displayName: "Query",
+
+
+	  // Here we set initial variables for the component to be blanks
+	  getInitialState: function getInitialState() {
+	    return {
+	      search: "",
+	      start: "",
+	      end: ""
+	    };
+	  },
+
+	  // Whenever we detect ANY change in the textbox, we register it.
+	  handleChange: function handleChange(event) {
+	    console.log("TEXT CHANGED");
+
+	    // Here we create syntax to capture any change in text to the query terms (pre-search).
+	    // See this Stack Overflow answer for more details:
+	    // http://stackoverflow.com/questions/21029999/react-js-identifying-different-inputs-with-one-onchange-handler
+	    var newState = {};
+	    newState[event.target.id] = event.target.value;
+	    this.setState(newState);
+	  },
+
+	  /*This code handles the sending of the search terms to the parent Search component*/
+	  handleSubmit: function handleSubmit() {
+	    console.log("CLICKED");
+	    this.props.updateSearch(this.state.search, this.state.start, this.state.end);
+	    return false;
+	  },
+
+	  // Here we render the Query component
+	  render: function render() {
+
+	    return React.createElement(
+	      "div",
+	      { className: "main-container" },
+	      React.createElement(
+	        "div",
+	        { className: "row" },
+	        React.createElement(
+	          "div",
+	          { className: "col-lg-12" },
+	          React.createElement(
+	            "div",
+	            { className: "panel panel-primary" },
+	            React.createElement(
+	              "div",
+	              { className: "panel-heading" },
+	              React.createElement(
+	                "h1",
+	                { className: "panel-title" },
+	                React.createElement(
+	                  "strong",
+	                  null,
+	                  React.createElement("i", { className: "fa fa-newspaper-o", "aria-hidden": "true" }),
+	                  "  Query"
+	                )
+	              )
+	            ),
+	            React.createElement(
+	              "div",
+	              { className: "panel-body" },
+	              React.createElement(
+	                "form",
+	                null,
+	                React.createElement(
+	                  "div",
+	                  { className: "form-group" },
+	                  React.createElement(
+	                    "h4",
+	                    { className: "" },
+	                    React.createElement(
+	                      "strong",
+	                      null,
+	                      "Topic"
+	                    )
+	                  ),
+	                  React.createElement("input", { type: "text", value: this.state.value, className: "form-control ", id: "search", onChange: this.handleChange, required: true }),
+	                  React.createElement(
+	                    "h4",
+	                    { className: "" },
+	                    React.createElement(
+	                      "strong",
+	                      null,
+	                      "Start Year"
+	                    )
+	                  ),
+	                  React.createElement("input", { type: "number", value: this.state.value, className: "form-control ", id: "start", onChange: this.handleChange, required: true }),
+	                  React.createElement(
+	                    "h4",
+	                    { className: "" },
+	                    React.createElement(
+	                      "strong",
+	                      null,
+	                      "End Year"
+	                    )
+	                  ),
+	                  React.createElement("input", { type: "number", value: this.state.value, className: "form-control ", id: "end", onChange: this.handleChange, required: true })
+	                ),
+	                React.createElement(
+	                  "div",
+	                  { className: "pull-right" },
+	                  React.createElement(
+	                    "button",
+	                    { type: "button", className: "btn btn-danger", onClick: this.handleSubmit },
+	                    React.createElement(
+	                      "h4",
+	                      null,
+	                      "Submit"
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+
+	});
+
+	// Export the module back to the route
+	module.exports = Query;
 
 /***/ }
 /******/ ]);

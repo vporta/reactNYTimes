@@ -1,6 +1,6 @@
 var React = require('react');
 var Router = require('react-router');
-var Search = require("./Search")
+// var Search = require("./Search")
 
 var Main = React.createClass({
 
@@ -19,8 +19,8 @@ var Main = React.createClass({
             </div>
             <ul className="nav navbar-nav">
               <li className="active"><a href="#">Home</a></li>
-              <li><a href="#">Search</a></li>
-              <li><a href="#">Saved Articles</a></li> 
+              <li><a href="#/search">Search</a></li>
+              <li><a href="#/saved">Saved Articles</a></li>
             </ul>
           </div>
         </nav>
@@ -28,10 +28,12 @@ var Main = React.createClass({
             <h1>(REACTJS) New York Times Article Search</h1> 
             <p>Search for and save articles of interest.</p> 
           </div> 
-          <div className="mainBox">
-            <h1>Components</h1>
-            <Search mainsName={this.state.name} />
-          </div>
+          {this.props.children}
+
+          <footer>
+            <hr />
+            <p className="pull-right"><i className="fa fa-github" aria-hidden="true"></i> Proudly built using React.js</p>
+          </footer>
         </div>
     )
   }

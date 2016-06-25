@@ -1,9 +1,9 @@
 var React = require('react');
 
-var Search = React.createClass({
+var Saved = React.createClass({
   getInitialState: function() {
     return {
-      name: "I am the Search component"
+      name: "I am the Saved component"
     }
   },
   render: function() {
@@ -15,4 +15,4 @@ var Search = React.createClass({
   }
 });
 
-module.exports = Search;
+module.exports = Saved;
