@@ -1,7 +1,6 @@
 var React = require('react');
 var Router = require('react-router');
-// var Search = require("./Search")
-
+var Link = require('react-router');
 var Main = React.createClass({
 
   getInitialState: function() {

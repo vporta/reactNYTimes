@@ -24,6 +24,7 @@ var Search = React.createClass({
   },
 
 
+
   /*This function gets called if the user searches for a completely new set of parameters (i.e. if any of the search terms changes)*/
   /*If the user searches for the exact same thing, then React will ignore it.*/
   componentDidUpdate: function(prevProps, prevState){
@@ -33,7 +34,9 @@ var Search = React.createClass({
     console.log(this.state.endYear);
 
     console.log("Previous State", prevState);
-
+  
+      
+   
 
         // console.log("RESULTS", results)
         // console.log("DATA", data)

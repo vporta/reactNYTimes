@@ -11,7 +11,7 @@ var IndexRoute  = Router.IndexRoute;
 // Reference the high-level components
 var Main = require('../Components/Main');
 var Saved = require('../Components/Saved');
-var Search = require('../Components/Search/Query');
+var Search = require('../Components/Search');
 
 
 // Export the Routes
