@@ -80,7 +80,7 @@ app.get('/api/saved', function(req, res) {
 
 // Route to add an article to saved list
 app.post('/api/saved', function(req, res){
-  var newArticle = new Article(req.body);
+  var newArticle = new article(req.body);
 
   console.log(req.body)
 
@@ -115,6 +115,6 @@ app.delete('/api/saved/', function(req, res){
 
 // -------------------------------------------------
 
-app.listen(PORT, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log("App listening on PORT: " + PORT);
 });

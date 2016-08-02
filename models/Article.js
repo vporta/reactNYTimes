@@ -1,27 +1,17 @@
-// var mongoose = require('mongoose');
-// var mongojs = require('mongojs');
-// var db = require('../config/db');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-// var Schema = mongoose.Schema;
+var ArticleSchema = new Schema({
+  title: {
+    type: String,
+  },
+  date: {
+    type: Date
+  },
+  url: {
+    type: String,
+  }
+});
 
-// // create a schema
-// var articleSchema = new Schema({
-//   title: {
-//     type:String,
-//     required:true
-//   },
-//   link: {
-//     type:String,
-//     required:true
-//   },
-//   date: {
-//     type: String,
-   
-//   }
-// });
-
-// // we need to create a model using it
-// var Article = mongoose.model('Article', articleSchema);
-
-// // make this available to our users in our Node applications
-// module.exports = Article;
+var Article = mongoose.model('Article', ArticleSchema);
+module.exports = Article;
