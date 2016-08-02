@@ -23,36 +23,36 @@ app.use(express.static('./public'));
 // -------------------------------------------------
 // Database configuration with mongoose
 
-var NYTSearch_db = 'mongodb://localhost/NYTSearch_db';
+// var NYTSearch_db = 'mongodb://localhost/NYTSearch_db';
 
-if (process.env.MONGODB_URI) {
-  console.log('THIS IS THE HEROKU MONGODB URI =====> ' + process.env.MONGODB_URI);
-  mongoose.connect(process.env.MONGODB_URI);
-} else {
-  mongoose.connect(NYTSearch_db);
-}
+// if (process.env.MONGODB_URI) {
+//   console.log('THIS IS THE HEROKU MONGODB URI =====> ' + process.env.MONGODB_URI);
+//   mongoose.connect(process.env.MONGODB_URI);
+// } else {
+//   mongoose.connect(NYTSearch_db);
+// }
   
-var db = mongoose.connection;
-
-db.on('error', function(err) {
-  console.log('Database Error:', err);
-});
-
-db.once('open', function() {
-  // we're connected!
-  console.log('connected to ' + NYTSearch_db);
-});
-// // MongoDB Configuration configuration
-// mongoose.connect('mongodb://admin:reactrocks@ds023593.mlab.com:23593/heroku_pg676kmk');
 // var db = mongoose.connection;
 
-// db.on('error', function (err) {
-//   console.log('Mongoose Error: ', err);
+// db.on('error', function(err) {
+//   console.log('Database Error:', err);
 // });
 
-// db.once('open', function () {
-//   console.log('Mongoose connection successful.');
+// db.once('open', function() {
+//   // we're connected!
+//   console.log('connected to ' + NYTSearch_db);
 // });
+// // MongoDB Configuration configuration
+mongoose.connect('mongodb://heroku_dzqdjbpp:m4q2mgf93oiqlk2h0os6ocgq3s@ds139655.mlab.com:39655/heroku_dzqdjbpp');
+var db = mongoose.connection;
+
+db.on('error', function (err) {
+  console.log('Mongoose Error: ', err);
+});
+
+db.once('open', function () {
+  console.log('Mongoose connection successful.');
+});
 
 
 
