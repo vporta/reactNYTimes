@@ -1,58 +1,120 @@
-// var express = require('express');
-// var path = require('path');
-// var favicon = require('serve-favicon');
-// var logger = require('morgan');
-// var cookieParser = require('cookie-parser');
-// var bodyParser = require('body-parser');
+// Include Server Dependencies
+var express = require('express');
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var mongoose = require('mongoose');
 
-// var routes = require('./routes/index');
+//Require Schemas
+var Article = require('./models/Article.js');
 
-// var app = express();
+// Create Instance of Express
+var app = express();
+var PORT = process.env.PORT || 3000; // Sets an initial port. We'll use this later in our listener
 
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'html');
+// Run Morgan for Logging
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.text());
+app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
-// // uncomment after placing your favicon in /public
-// //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('./public'));
 
-// app.use('/', routes);
+// -------------------------------------------------
+// Database configuration with mongoose
 
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
+// var scrape_db = 'mongodb://localhost/scrape_db';
 
-// // error handlers
-
-// // development error handler
-// // will print stacktrace
-// if (app.get('env') === 'development') {
-//   app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//       message: err.message,
-//       error: err
-//     });
-//   });
+// if (process.env.MONGODB_URI) {
+//   console.log('THIS IS THE HEROKU MONGODB URI =====> ' + process.env.MONGODB_URI);
+//   mongoose.connect(process.env.MONGODB_URI);
+// } else {
+//   mongoose.connect(scrape_db);
 // }
+  
+// var db = mongoose.connection;
 
-// // production error handler
-// // no stacktraces leaked to user
-// app.use(function(err, req, res, next) {
-//   res.status(err.status || 500);
-//   res.render('error', {
-//     message: err.message,
-//     error: {}
-//   });
+// db.on('error', function(err) {
+//   console.log('Database Error:', err);
 // });
 
+// db.once('open', function() {
+//   // we're connected!
+//   console.log('connected to ' + scrape_db);
+// });
+// MongoDB Configuration configuration
+mongoose.connect('mongodb://admin:reactrocks@ds023593.mlab.com:23593/heroku_pg676kmk');
+var db = mongoose.connection;
 
-// module.exports = app;
+db.on('error', function (err) {
+  console.log('Mongoose Error: ', err);
+});
+
+db.once('open', function () {
+  console.log('Mongoose connection successful.');
+});
+
+
+
+// -------------------------------------------------
+
+// Main Route
+app.get('/', function(req, res){
+  res.sendFile('./public/index.html');
+})
+
+// Route to get all saved articles
+app.get('/api/saved', function(req, res) {
+
+  Article.find({})
+    .exec(function(err, doc){
+
+      if(err){
+        console.log(err);
+      }
+      else {
+        res.send(doc);
+      }
+    })
+});
+
+// Route to add an article to saved list
+app.post('/api/saved', function(req, res){
+  var newArticle = new Article(req.body);
+
+  console.log(req.body)
+
+  var title = req.body.title;
+  var date = req.body.date;
+  var url = req.body.url;
+
+  newArticle.save(function(err, doc){
+    if(err){
+      console.log(err);
+    } else {
+      res.send(doc._id);
+    }
+  });
+});
+
+// Route to delete an article from saved list
+app.delete('/api/saved/', function(req, res){
+
+  var url = req.param('url');
+
+  Article.find({"url": url}).remove().exec(function(err, data){
+    if(err){
+      console.log(err);
+    }
+    else {
+      res.send("Deleted");
+    }
+  });
+});
+
+
+// -------------------------------------------------
+
+app.listen(PORT, function() {
+  console.log("App listening on PORT: " + PORT);
+});

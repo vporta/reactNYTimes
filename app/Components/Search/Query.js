@@ -2,7 +2,7 @@
 var React = require('react');
 
 // Query Component Declaration
-var Query = React.createClass({
+var Query = React.createClass({ 
 
   // Here we set initial variables for the component to be blanks
   getInitialState: function(){
@@ -13,12 +13,12 @@ var Query = React.createClass({
     }
   },
 
-  // Whenever we detect ANY change in the textbox, we register it.
+  // Whenever we detect ANY change in the textbox, we register it. 
     handleChange: function(event) {
       console.log("TEXT CHANGED");
 
       // Here we create syntax to capture any change in text to the query terms (pre-search).
-      // See this Stack Overflow answer for more details:
+      // See this Stack Overflow answer for more details: 
       // http://stackoverflow.com/questions/21029999/react-js-identifying-different-inputs-with-one-onchange-handler
       var newState = {};
       newState[event.target.id] = event.target.value;

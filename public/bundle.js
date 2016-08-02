@@ -26200,8 +26200,8 @@
 
 	// Reference the high-level components
 	var Main = __webpack_require__(230);
-	var Saved = __webpack_require__(231);
-	var Search = __webpack_require__(233);
+	var Search = __webpack_require__(231);
+	var Saved = __webpack_require__(254);
 
 	// Export the Routes
 	module.exports = React.createElement(
@@ -26218,132 +26218,202 @@
 
 	'use strict';
 
+	// Include React and React-Router dependencies
 	var React = __webpack_require__(1);
 	var Router = __webpack_require__(168);
 
+	// Create the Main component
 	var Main = React.createClass({
 	  displayName: 'Main',
 
 
-	  getInitialState: function getInitialState() {
-	    return {
-	      name: "I am the main component"
-	    };
-	  },
 	  render: function render() {
+
 	    return React.createElement(
 	      'div',
-	      { className: 'container' },
+	      { className: 'main-container' },
 	      React.createElement(
-	        'nav',
-	        { className: 'navbar navbar-default' },
+	        'div',
+	        { className: 'container' },
 	        React.createElement(
-	          'div',
-	          { className: 'container-fluid' },
+	          'nav',
+	          { className: 'navbar navbar-default', role: 'navigation' },
 	          React.createElement(
 	            'div',
-	            { className: 'navbar-header' },
+	            { className: 'container-fluid' },
 	            React.createElement(
-	              'a',
-	              { className: 'navbar-brand', href: '#' },
-	              'NYT React'
-	            )
-	          ),
-	          React.createElement(
-	            'ul',
-	            { className: 'nav navbar-nav' },
-	            React.createElement(
-	              'li',
-	              { className: 'active' },
+	              'div',
+	              { className: 'navbar-header' },
+	              React.createElement(
+	                'button',
+	                { type: 'button', className: 'navbar-toggle', 'data-toggle': 'collapse', 'data-target': '.navbar-ex1-collapse' },
+	                React.createElement(
+	                  'span',
+	                  { className: 'sr-only' },
+	                  'Toggle navigation'
+	                ),
+	                React.createElement('span', { className: 'icon-bar' }),
+	                React.createElement('span', { className: 'icon-bar' }),
+	                React.createElement('span', { className: 'icon-bar' })
+	              ),
 	              React.createElement(
 	                'a',
-	                { href: '#' },
-	                'Home'
+	                { className: 'navbar-brand', href: '#' },
+	                'NYT-React'
 	              )
 	            ),
 	            React.createElement(
-	              'li',
-	              null,
+	              'div',
+	              { className: 'collapse navbar-collapse navbar-ex1-collapse' },
 	              React.createElement(
-	                'a',
-	                { href: '#/search' },
-	                'Search'
-	              )
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'a',
-	                { href: '#/saved' },
-	                'Saved Articles'
+	                'ul',
+	                { className: 'nav navbar-nav navbar-right' },
+	                React.createElement(
+	                  'li',
+	                  null,
+	                  React.createElement(
+	                    'a',
+	                    { href: '#/search' },
+	                    'Search'
+	                  )
+	                ),
+	                React.createElement(
+	                  'li',
+	                  null,
+	                  React.createElement(
+	                    'a',
+	                    { href: '#/saved' },
+	                    'Saved Articles'
+	                  )
+	                )
 	              )
 	            )
 	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'jumbotron' },
-	        React.createElement(
-	          'h1',
-	          null,
-	          '(REACTJS) New York Times Article Search'
 	        ),
 	        React.createElement(
-	          'p',
-	          null,
-	          'Search for and save articles of interest.'
-	        )
-	      ),
-	      this.props.children,
-	      React.createElement(
-	        'footer',
-	        null,
-	        React.createElement('hr', null),
+	          'div',
+	          { className: 'jumbotron' },
+	          React.createElement(
+	            'h2',
+	            { className: 'text-center' },
+	            React.createElement(
+	              'strong',
+	              null,
+	              '(ReactJS) New York Times Article Scrubber'
+	            )
+	          ),
+	          React.createElement(
+	            'h3',
+	            { className: 'text-center' },
+	            'Search for and save articles of interest.'
+	          )
+	        ),
+	        this.props.children,
 	        React.createElement(
-	          'p',
-	          { className: 'pull-right' },
-	          React.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' }),
-	          ' Proudly built using React.js'
+	          'footer',
+	          null,
+	          React.createElement('hr', null),
+	          React.createElement(
+	            'p',
+	            { className: 'pull-right' },
+	            React.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' }),
+	            ' Proudly built using React.js'
+	          )
 	        )
 	      )
 	    );
 	  }
 	});
 
+	// Export the module back to the route
 	module.exports = Main;
 
 /***/ },
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
+	// Include React and React-Router dependencies
 	var React = __webpack_require__(1);
+	var Router = __webpack_require__(168);
 
-	var Saved = React.createClass({
-	  displayName: "Saved",
+	// Include the Query and Results componens
+	var Query = __webpack_require__(232);
+	var Results = __webpack_require__(233);
 
+	// Include the Helper (for the query)
+	var helpers = __webpack_require__(234);
+
+	// Create the Main component
+	var Search = React.createClass({
+	  displayName: 'Search',
+
+
+	  /*Here we set the initial state variables (this allows us to propagate the variables for maniuplation by the children components*/
+	  /*Also note the "resuls" state. This will be where we hold the data from our results*/
 	  getInitialState: function getInitialState() {
 	    return {
-	      name: "I am the Saved component"
+	      queryTerm: "",
+	      startYear: "",
+	      endYear: "",
+	      results: {}
 	    };
 	  },
-	  render: function render() {
+
+	  /*This function gets called if the user searches for a completely new set of parameters (i.e. if any of the search terms changes)*/
+	  /*If the user searches for the exact same thing, then React will ignore it.*/
+	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	    console.log("COMPONENT UPDATED");
+	    console.log(this.state.queryTerm);
+	    console.log(this.state.startYear);
+	    console.log(this.state.endYear);
+
+	    console.log("Previous State", prevState);
+
+	    if (this.state.queryTerm != "" && (prevState.queryTerm != this.state.queryTerm || prevState.startYear != this.state.startYear || prevState.endYear != this.state.endYear)) {
+	      helpers.runQuery(this.state.queryTerm, this.state.startYear, this.state.endYear).then(function (data) {
+	        if (data != this.state.results) {
+	          this.setState({
+	            results: data
+	          });
+	        }
+
+	        // console.log("RESULTS", results)
+	        // console.log("DATA", data)
+
+	        // This code is necessary to bind the keyword "this" when we say this.setState
+	        // to actually mean the component itself and not the runQuery function.
+	      }.bind(this));
+	    }
+	  },
+
+	  // This function will be passed down into children components so they can change the "parent"
+	  // i.e we will pass this method to the query component that way it can change the main component
+	  // to perform a new search
+	  setQuery: function setQuery(newQuery, newStart, newEnd) {
+	    console.log("TEST");
+	    this.setState({
+	      queryTerm: newQuery,
+	      startYear: newStart,
+	      endYear: newEnd
+	    });
+	  },
+
+	  /*Render the function. Note how we deploy both the Query and the Results*/render: function render() {
+	    console.log("Render Results", this.state.results);
+
 	    return React.createElement(
-	      "div",
-	      { className: "container" },
-	      React.createElement(
-	        "h1",
-	        { className: "searchBox" },
-	        this.props.name
-	      )
+	      'div',
+	      { className: 'main-container' },
+	      React.createElement(Query, { updateSearch: this.setQuery }),
+	      React.createElement(Results, { results: this.state.results })
 	    );
 	  }
 	});
 
-	module.exports = Saved;
+	// Export the module back to the route
+	module.exports = Search;
 
 /***/ },
 /* 232 */
@@ -26492,85 +26562,8 @@
 	var React = __webpack_require__(1);
 	var Router = __webpack_require__(168);
 
-	// Include the Query and Results components
-	var Query = __webpack_require__(232);
-	var Results = __webpack_require__(234);
-
 	// Include the Helper (for the query)
-	var helpers = __webpack_require__(235);
-
-	// Create the Main component
-	var Search = React.createClass({
-	  displayName: 'Search',
-
-
-	  /*Here we set the initial state variables (this allows us to propagate the variables for maniuplation by the children components*/
-	  /*Also note the "resuls" state. This will be where we hold the data from our results*/
-	  getInitialState: function getInitialState() {
-	    return {
-	      queryTerm: "",
-	      startYear: "",
-	      endYear: "",
-	      results: {}
-	    };
-	  },
-
-	  /*This function gets called if the user searches for a completely new set of parameters (i.e. if any of the search terms changes)*/
-	  /*If the user searches for the exact same thing, then React will ignore it.*/
-	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
-	    console.log("COMPONENT UPDATED");
-	    console.log(this.state.queryTerm);
-	    console.log(this.state.startYear);
-	    console.log(this.state.endYear);
-
-	    console.log("Previous State", prevState);
-
-	    // console.log("RESULTS", results)
-	    // console.log("DATA", data)
-
-	    // This code is necessary to bind the keyword "this" when we say this.setState
-	    // to actually mean the component itself and not the runQuery function.
-	  },
-
-	  // This function will be passed down into children components so they can change the "parent"
-	  // i.e we will pass this method to the query component that way it can change the main component
-	  // to perform a new search
-	  setQuery: function setQuery(newQuery, newStart, newEnd) {
-	    console.log("TEST");
-	    this.setState({
-	      queryTerm: newQuery,
-	      startYear: newStart,
-	      endYear: newEnd
-	    });
-	  },
-
-	  /*Render the function. Note how we deploy both the Query and the Results*/render: function render() {
-	    console.log("Render Results", this.state.results);
-
-	    return React.createElement(
-	      'div',
-	      { className: 'main-container' },
-	      React.createElement(Query, { updateSearch: this.setQuery }),
-	      React.createElement(Results, { results: this.state.results })
-	    );
-	  }
-	});
-
-	// Export the module back to the route
-	module.exports = Search;
-
-/***/ },
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	// Include React and React-Router dependencies
-	var React = __webpack_require__(1);
-	var Router = __webpack_require__(168);
-
-	// Include the Helper (for the query)
-	var helpers = __webpack_require__(235);
+	var helpers = __webpack_require__(234);
 
 	// Query Component Declaration
 	var Results = React.createClass({
@@ -26579,20 +26572,29 @@
 
 	  // Here we will save states for the contents we save
 	  getInitialState: function getInitialState() {
-	    return {};
+	    return {
+	      title: "",
+	      url: "",
+	      pubdate: ""
+	    };
 	  },
 
 	  // /*This code handles the sending of the search terms to the parent Search component*/
 	  handleClick: function handleClick(item, event) {
 	    console.log("CLICKED");
 	    console.log(item);
+
+	    helpers.postSaved(item.headline.main, item.pub_date, item.web_url).then(function (data) {
+	      console.log(item.web_url);
+	    }.bind(this));
 	  },
 
 	  // Here we render the function
 	  render: function render() {
+	    if (
 
 	    // We check if the target has a "docs" value (to confirm that we aren't just running the initial data)
-	    if (!this.props.results.hasOwnProperty('docs')) {
+	    !this.props.results.hasOwnProperty('docs')) {
 
 	      return React.createElement(
 	        'li',
@@ -26615,12 +26617,57 @@
 
 	    // If data is provided
 	    else {
+	      var
 
-	        // We loop through the results and create divs for each.
-
-	        // Each article thus reperesents a list group item with a known index
-
-	      }
+	      // We loop through the results and create divs for each.
+	      articles = this.props.results.docs.map(function (article, index) {
+	        return React.createElement(
+	          'div',
+	          { key: index },
+	          React.createElement(
+	            'li',
+	            { className: 'list-group-item' },
+	            React.createElement(
+	              'h3',
+	              null,
+	              React.createElement(
+	                'span',
+	                null,
+	                React.createElement(
+	                  'em',
+	                  null,
+	                  article.headline.main
+	                )
+	              ),
+	              React.createElement(
+	                'span',
+	                { className: 'btn-group pull-right' },
+	                React.createElement(
+	                  'a',
+	                  { href: article.web_url, target: '_blank' },
+	                  React.createElement(
+	                    'button',
+	                    { className: 'btn btn-default ' },
+	                    'View Article'
+	                  )
+	                ),
+	                React.createElement(
+	                  'button',
+	                  { className: 'btn btn-primary', onClick: this.handleClick.bind(this, article) },
+	                  'Save'
+	                )
+	              )
+	            ),
+	            React.createElement(
+	              'p',
+	              null,
+	              'Date Published: ',
+	              article.pub_date
+	            )
+	          )
+	        );
+	      }.bind(this));
+	    }
 
 	    return React.createElement(
 	      'div',
@@ -26669,52 +26716,16 @@
 	module.exports = Results;
 
 /***/ },
-/* 235 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	// /*Axios is a convenient NPM package for performing HTTP requests*/
-	// var axios = require('axios');
-
-	// // Here we have two functions for querying for user and repo information to the GitHub website.
-	// // var article;
-	// // var beginDate;
-	// // var endDate;
-
-	// function getA(article, beginDate, endDate){
-	//   return axios.get('http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' +article+ '&begin_date='+beginDate+'&end_date='+endDate+'&fq=source:("The New York Times")&api-key=f91776ed061f4966bd01e763e7c0d3c7');
-	// };
-
-	// // Since we need both functions invoked at the same time..
-	// // We lump them together inside of an object and use the axios.all function
-	// var helpers = {
-	//   getGithubInfo: function(article, beginDate, endDate){
-	//     // Axios will wait for both of these promises to get done...
-	//     // It will then return them both as an array.
-	//     // We will then take the object that utilizes the array to hold the bio and repos.
-	//     return axios.get([getA(article, beginDate, endDate)])
-	//       .then(function(arr){
-	//         return {
-
-	//           // We then want to display the repos + bios
-	//           name: arr[0].data.name,
-	//           link: arr[0].data.link,
-	//           published: arr[0].data.published
-	//         }
-	//       })
-	//   }
-
-	// }
-
-	// // We export the helpers function (which contains getGithubInfo)
-	// module.exports = helpers;
-
 	// Include the Axios library for HTTP requests
-	var axios = __webpack_require__(236);
+	var axios = __webpack_require__(235);
 
 	// /* NYT API Key*/
-	var APIKey = "9d4a8986921972b65754ea0809d47c84:12:74623931";
+	var APIKey = "f91776ed061f4966bd01e763e7c0d3c7";
 
 	// // Helper Functions (in this case the only one is runQuery)
 	var helpers = {
@@ -26781,27 +26792,27 @@
 	module.exports = helpers;
 
 /***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(236);
+
+/***/ },
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(237);
-
-/***/ },
-/* 237 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var defaults = __webpack_require__(238);
-	var utils = __webpack_require__(239);
-	var dispatchRequest = __webpack_require__(241);
-	var InterceptorManager = __webpack_require__(250);
-	var isAbsoluteURL = __webpack_require__(251);
-	var combineURLs = __webpack_require__(252);
-	var bind = __webpack_require__(253);
-	var transformData = __webpack_require__(245);
+	var defaults = __webpack_require__(237);
+	var utils = __webpack_require__(238);
+	var dispatchRequest = __webpack_require__(240);
+	var InterceptorManager = __webpack_require__(249);
+	var isAbsoluteURL = __webpack_require__(250);
+	var combineURLs = __webpack_require__(251);
+	var bind = __webpack_require__(252);
+	var transformData = __webpack_require__(244);
 
 	function Axios(defaultConfig) {
 	  this.defaults = utils.merge({}, defaultConfig);
@@ -26879,7 +26890,7 @@
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(254);
+	axios.spread = __webpack_require__(253);
 
 	// Provide aliases for supported request methods
 	utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
@@ -26906,13 +26917,13 @@
 	});
 
 /***/ },
-/* 238 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(239);
-	var normalizeHeaderName = __webpack_require__(240);
+	var utils = __webpack_require__(238);
+	var normalizeHeaderName = __webpack_require__(239);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -26978,7 +26989,7 @@
 	};
 
 /***/ },
-/* 239 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27258,12 +27269,12 @@
 	};
 
 /***/ },
-/* 240 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(239);
+	var utils = __webpack_require__(238);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -27275,7 +27286,7 @@
 	};
 
 /***/ },
-/* 241 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -27298,10 +27309,10 @@
 	        adapter = config.adapter;
 	      } else if (typeof XMLHttpRequest !== 'undefined') {
 	        // For browsers use XHR adapter
-	        adapter = __webpack_require__(242);
+	        adapter = __webpack_require__(241);
 	      } else if (typeof process !== 'undefined') {
 	        // For node use HTTP adapter
-	        adapter = __webpack_require__(242);
+	        adapter = __webpack_require__(241);
 	      }
 
 	      if (typeof adapter === 'function') {
@@ -27315,18 +27326,18 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 242 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(239);
-	var buildURL = __webpack_require__(243);
-	var parseHeaders = __webpack_require__(244);
-	var transformData = __webpack_require__(245);
-	var isURLSameOrigin = __webpack_require__(246);
-	var btoa = typeof window !== 'undefined' && window.btoa || __webpack_require__(247);
-	var settle = __webpack_require__(248);
+	var utils = __webpack_require__(238);
+	var buildURL = __webpack_require__(242);
+	var parseHeaders = __webpack_require__(243);
+	var transformData = __webpack_require__(244);
+	var isURLSameOrigin = __webpack_require__(245);
+	var btoa = typeof window !== 'undefined' && window.btoa || __webpack_require__(246);
+	var settle = __webpack_require__(247);
 
 	module.exports = function xhrAdapter(resolve, reject, config) {
 	  var requestData = config.data;
@@ -27419,7 +27430,7 @@
 	  // This is only done if running in a standard browser environment.
 	  // Specifically not if we're in a web worker, or react-native.
 	  if (utils.isStandardBrowserEnv()) {
-	    var cookies = __webpack_require__(249);
+	    var cookies = __webpack_require__(248);
 
 	    // Add xsrf header
 	    var xsrfValue = config.withCredentials || isURLSameOrigin(config.url) ? cookies.read(config.xsrfCookieName) : undefined;
@@ -27477,12 +27488,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 243 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(239);
+	var utils = __webpack_require__(238);
 
 	function encode(val) {
 	  return encodeURIComponent(val).replace(/%40/gi, '@').replace(/%3A/gi, ':').replace(/%24/g, '$').replace(/%2C/gi, ',').replace(/%20/g, '+').replace(/%5B/gi, '[').replace(/%5D/gi, ']');
@@ -27543,12 +27554,12 @@
 	};
 
 /***/ },
-/* 244 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(239);
+	var utils = __webpack_require__(238);
 
 	/**
 	 * Parse headers into an object
@@ -27587,12 +27598,12 @@
 	};
 
 /***/ },
-/* 245 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(239);
+	var utils = __webpack_require__(238);
 
 	/**
 	 * Transform the data for a request or a response
@@ -27612,12 +27623,12 @@
 	};
 
 /***/ },
-/* 246 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(239);
+	var utils = __webpack_require__(238);
 
 	module.exports = utils.isStandardBrowserEnv() ?
 
@@ -27680,7 +27691,7 @@
 	}();
 
 /***/ },
-/* 247 */
+/* 246 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27720,7 +27731,7 @@
 	module.exports = btoa;
 
 /***/ },
-/* 248 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27744,12 +27755,12 @@
 	};
 
 /***/ },
-/* 249 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(239);
+	var utils = __webpack_require__(238);
 
 	module.exports = utils.isStandardBrowserEnv() ?
 
@@ -27802,12 +27813,12 @@
 	}();
 
 /***/ },
-/* 250 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(239);
+	var utils = __webpack_require__(238);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -27859,7 +27870,7 @@
 	module.exports = InterceptorManager;
 
 /***/ },
-/* 251 */
+/* 250 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27880,7 +27891,7 @@
 	};
 
 /***/ },
-/* 252 */
+/* 251 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27898,7 +27909,7 @@
 	};
 
 /***/ },
-/* 253 */
+/* 252 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27914,7 +27925,7 @@
 	};
 
 /***/ },
-/* 254 */
+/* 253 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27945,6 +27956,175 @@
 	    return callback.apply(null, arr);
 	  };
 	};
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// Include React and React-Router dependencies
+	var React = __webpack_require__(1);
+	var Router = __webpack_require__(168);
+
+	// Include the Helper (for the saved recall)
+	var helpers = __webpack_require__(234);
+
+	// Create the Main component
+	var Main = React.createClass({
+	  displayName: 'Main',
+
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      savedArticles: ""
+	    };
+	  },
+
+	  componentDidMount: function componentDidMount() {
+
+	    helpers.getSaved().then(function (articleData) {
+	      this.setState({
+	        savedArticles: articleData.data
+	      });
+	      console.log("saved results", articleData.data);
+	    }.bind(this));
+	  },
+
+	  // /*This code handles the sending of the search terms to the parent Search component*/
+	  handleClick: function handleClick(item, event) {
+	    console.log("CLICKED");
+	    console.log(item);
+
+	    // Delete the list!
+	    helpers.deleteSaved(item.title, item.date, item.url).then(function (data) {
+
+	      // Get the revised list!
+	      helpers.getSaved().then(function (articleData) {
+	        this.setState({
+	          savedArticles: articleData.data
+	        });
+	        console.log("saved results", articleData.data);
+	      }.bind(this));
+	    }.bind(this));
+	  },
+
+	  render: function render() {
+
+	    if (this.state.savedArticles == "") {
+	      return React.createElement(
+	        'li',
+	        { className: 'list-group-item' },
+	        React.createElement(
+	          'h3',
+	          null,
+	          React.createElement(
+	            'span',
+	            null,
+	            React.createElement(
+	              'em',
+	              null,
+	              'Save your first article...'
+	            )
+	          )
+	        )
+	      );
+	    } else {
+
+	      var articles = this.state.savedArticles.map(function (article, index) {
+
+	        return React.createElement(
+	          'div',
+	          { key: index },
+	          React.createElement(
+	            'li',
+	            { className: 'list-group-item' },
+	            React.createElement(
+	              'h3',
+	              null,
+	              React.createElement(
+	                'span',
+	                null,
+	                React.createElement(
+	                  'em',
+	                  null,
+	                  article.title
+	                )
+	              ),
+	              React.createElement(
+	                'span',
+	                { className: 'btn-group pull-right' },
+	                React.createElement(
+	                  'a',
+	                  { href: article.url, target: '_blank' },
+	                  React.createElement(
+	                    'button',
+	                    { className: 'btn btn-default ' },
+	                    'View Article'
+	                  )
+	                ),
+	                React.createElement(
+	                  'button',
+	                  { className: 'btn btn-primary', onClick: this.handleClick.bind(this, article) },
+	                  'Delete'
+	                )
+	              )
+	            ),
+	            React.createElement(
+	              'p',
+	              null,
+	              'Date Published: ',
+	              article.date
+	            )
+	          )
+	        );
+	      }.bind(this));
+	    }
+
+	    return React.createElement(
+	      'div',
+	      { className: 'main-container' },
+	      React.createElement(
+	        'div',
+	        { className: 'row' },
+	        React.createElement(
+	          'div',
+	          { className: 'col-lg-12' },
+	          React.createElement(
+	            'div',
+	            { className: 'panel panel-primary' },
+	            React.createElement(
+	              'div',
+	              { className: 'panel-heading' },
+	              React.createElement(
+	                'h1',
+	                { className: 'panel-title' },
+	                React.createElement(
+	                  'strong',
+	                  null,
+	                  React.createElement('i', { className: 'fa fa-download', 'aria-hidden': 'true' }),
+	                  ' Saved Articles'
+	                )
+	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'panel-body' },
+	              React.createElement(
+	                'ul',
+	                { className: 'list-group' },
+	                articles
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+	// Export the module back to the route
+	module.exports = Main;
 
 /***/ }
 /******/ ]);

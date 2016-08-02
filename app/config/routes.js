@@ -1,3 +1,4 @@
+
 // Inclue the React library
 var React = require('react');
 
@@ -9,9 +10,9 @@ var Route = Router.Route;
 var IndexRoute  = Router.IndexRoute;
 
 // Reference the high-level components
-var Main = require('../Components/Main');
-var Saved = require('../Components/Saved');
-var Search = require('../Components/Search');
+var Main = require('../components/Main');
+var Search = require('../components/Search'); 
+var Saved = require('../components/Saved'); 
 
 
 // Export the Routes

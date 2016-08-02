@@ -6,13 +6,14 @@ var Router = require('react-router');
 var helpers = require('../../utils/helpers');
 
 // Query Component Declaration
-var Results = React.createClass({
+var Results = React.createClass({ 
 
-  // Here we will save states for the contents we save
+  // Here we will save states for the contents we save 
   getInitialState: function(){
-    return {
-
-
+    return { 
+      title: "",
+      url: "",
+      pubdate: "",
     }
   },
 
@@ -21,6 +22,10 @@ var Results = React.createClass({
     console.log("CLICKED");
     console.log(item);
 
+    helpers.postSaved(item.headline.main, item.pub_date, item.web_url)
+      .then(function(data){
+        console.log(item.web_url);
+      }.bind(this))
 
   },
 
@@ -35,11 +40,11 @@ var Results = React.createClass({
       return(
 
         <li className="list-group-item">
-
+          
           <h3>
               <span><em>Enter search terms to begin...</em></span>
           </h3>
-
+          
           </li>
 
       )
@@ -50,8 +55,33 @@ var Results = React.createClass({
     else {
 
       // We loop through the results and create divs for each.
+      var articles = this.props.results.docs.map(function(article, index){
 
         // Each article thus reperesents a list group item with a known index
+        return(
+
+            <div key={index}>
+
+              <li className="list-group-item" >
+                
+              <h3>
+                  <span><em>{article.headline.main}</em></span>
+                <span className="btn-group pull-right" >
+                  <a href={article.web_url} target="_blank"><button className="btn btn-default ">View Article</button></a>
+
+                  {/*By binding the button with the article we can save the article contents to our db*/}
+                  <button className="btn btn-primary" onClick={this.handleClick.bind(this, article)}>Save</button>
+                </span> 
+              </h3>
+              <p>Date Published: {article.pub_date}</p>
+
+              
+              </li>
+
+            </div>
+        )
+
+      }.bind(this))
 
     }
 
@@ -68,10 +98,10 @@ var Results = React.createClass({
               </div>
               <div className="panel-body">
                 <ul className="list-group">
-
+                  
                   {articles}
 
-                </ul>
+                </ul>         
               </div>
             </div>
 
@@ -79,7 +109,7 @@ var Results = React.createClass({
         </div>
 
 
-        
+
 
 
       </div>
