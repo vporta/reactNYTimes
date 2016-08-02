@@ -80,7 +80,7 @@ app.get('/api/saved', function(req, res) {
 
 // Route to add an article to saved list
 app.post('/api/saved', function(req, res){
-  var newArticle = new article(req.body);
+  var newArticle = new Article(req.body);
 
   console.log(req.body)
 
