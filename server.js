@@ -19,8 +19,8 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(express.static('./public'));
 
 // Database configuration with mongoose
-const MONGODB_URI = process.env.MONGODB_URI;
-var promise = mongoose.connect(MONGODB_URI, {
+const MONGOLAB_CRIMSON_URI = process.env.MONGOLAB_CRIMSON_URI;
+var promise = mongoose.connect(MONGOLAB_CRIMSON_URI, {
   useMongoClient: true,
   useNewUrlParser: true
 });
@@ -31,7 +31,7 @@ promise.then(function(db) {
   });
   db.once('open', function() {
     // we're connected!
-    console.log('connected to ' + MONGODB_URI);
+    console.log('connected to ' + MONGOLAB_CRIMSON_URI);
   });
 });
 
