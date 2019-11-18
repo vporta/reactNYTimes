@@ -10,6 +10,11 @@ var ArticleSchema = new Schema({
   },
   url: {
     type: String,
+  },
+  createdAt: { 
+    type: Date, 
+    expires: 60, 
+    default: Date.now 
   }
 });
 

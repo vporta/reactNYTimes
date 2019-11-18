@@ -56,11 +56,13 @@ app.get('/api/saved', function(req, res) {
 
 // Route to add an article to saved list
 app.post('/api/saved', function(req, res){
-  var newArticle = new Article(req.body);
-  console.log(req.body)
-  var title = req.body.title;
-  var date = req.body.date;
-  var url = req.body.url;
+  var newArticle = new Article({ 
+    title: req.body.title,
+    date: req.body.date,
+    url: req.body.url
+  });
+  // console.log(req.body)
+  
   newArticle.save(function(err, doc){
     if(err){
       console.log(err);
